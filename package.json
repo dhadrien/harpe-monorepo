@@ -1,5 +1,6 @@
 {
   "name": "harbe-monorepo",
+  "description": "Monorepo for Harbe",
   "private": true,
   "scripts": {
     "build": "turbo build",
