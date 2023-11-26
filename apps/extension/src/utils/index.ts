@@ -1,4 +1,4 @@
-import { whiteListedDomains, redirectDomain } from '../constants';
+import { WHITELISTED_DOMAINS, HARPE_APP_URL } from '../constants';
 
 export const redirectActiveTabIfFocusAndNotWhitelisted =
   async (): Promise<void> => {
@@ -10,16 +10,22 @@ export const redirectActiveTabIfNotWhitelisted = async (): Promise<void> => {
   const currentTab = (
     await chrome.tabs.query({ active: true, currentWindow: true })
   )[0];
-  currentTab && redirectNonWhitelistedTab(currentTab, whiteListedDomains, redirectDomain);
+  currentTab && redirectNonWhitelistedTab(currentTab, WHITELISTED_DOMAINS, HARPE_APP_URL);
 };
 
 export async function redirectNonWhitelistedTab(
   tab: chrome.tabs.Tab,
   whiteListedDomains: string[],
-  redirectDomain: string,
+  redirectUrl: string,
 ): Promise<void> {
   // if tab url not whitelisted, then redirect to the targetURL
-  ![...whiteListedDomains, redirectDomain].some(allowedUrl =>
-    tab.url!.includes(allowedUrl),
-  ) && (await chrome.tabs.update(tab.id!, { url: `https://${redirectDomain}` }));
+  ![...whiteListedDomains, extractDomainFromUrl(redirectUrl)].some(allowedDomain =>
+    tab.url!.includes(allowedDomain),
+  ) && (await chrome.tabs.update(tab.id!, { url: redirectUrl }));
 }
+
+
+export const extractDomainFromUrl = (url: string): string => {
+  const urlObj = new URL(url);
+  return urlObj.hostname;
+};

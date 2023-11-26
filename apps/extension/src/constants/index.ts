@@ -1,2 +1,2 @@
-export const whiteListedDomains = ['chrome://extensions/', 'notion.so'];
-export const redirectDomain = 'ufc.com';
+export const WHITELISTED_DOMAINS = ['chrome://extensions/', 'notion.so'];
+export const HARPE_APP_URL = 'https://harpe.app';

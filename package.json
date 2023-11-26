@@ -3,8 +3,9 @@
   "description": "Monorepo for Harbe",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "build:prod": "dotenv -e .env.prod -e .env turbo build",
+    "build": "dotenv -e .env.local -e .env turbo build --no-cache",
+    "dev": "dotenv -e .env.local -e .env -- turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
@@ -21,5 +22,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "dotenv-cli": "^7.3.0"
+  }
 }
