@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.ENV': JSON.stringify(process.env.ENV),
-      'process.env.TEST': JSON.stringify(process.env.HARBE_APP_PORT),
+      'process.env.HARBE_APP_PORT': JSON.stringify(process.env.HARBE_APP_PORT),
     }),
     new CopyPlugin({
       patterns: [{ from: '.', to: '../', context: 'public' }],
